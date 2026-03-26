@@ -174,6 +174,7 @@
               <v-file-input
                 label="Foto de C.I."
                 prepend-inner-icon="mdi-camera"
+                v-model="miembro.foto_ci"
                 variant="outlined"
                 accept="image/*"
                 density="comfortable"
@@ -184,6 +185,7 @@
             <v-col cols="12" md="4">
               <v-file-input
                 label="Matrícula Vigente"
+                v-model="miembro.matricula"
                 prepend-inner-icon="mdi-card-account-details-star"
                 variant="outlined"
                 accept="image/*"
@@ -195,6 +197,7 @@
             <v-col cols="12" md="4">
               <v-file-input
                 label="Registro de Materias"
+                v-model="miembro.registro_materia"
                 prepend-inner-icon="mdi-file-document-check"
                 variant="outlined"
                 accept="image/*"
@@ -228,36 +231,24 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
+import { useEstudianteStore } from '../stores/estudiante.store'
+import { storeToRefs } from 'pinia'
 
+const estudianteStore = useEstudianteStore()
+
+const { subimtFormMiembro } = estudianteStore
+const { miembro } = storeToRefs(estudianteStore)
 const isFormValid = ref(false)
 const formRef = ref(null)
-const miembro = reactive({
-  ci: null,
-  nombres: null,
-  apellidos: null,
-  fecha_nacimiento: null,
-  ciudad: null,
-  direccion: null,
-  email: null,
-  facultad: null,
-  carrera: null,
-  nombre_soce: null,
-  semestre: null,
-  matriuula_univ: null,
-  descripcion: null,
-  foto_ci: null,
-  matricula: null,
-  registro_materia: null,
-})
 const resetForm = () => {
   formRef.value.reset()
 }
 
 const submitForm = () => {
   if (isFormValid.value) {
-    alert('Formulario validado. ¡Listo para enviar a Vercel!')
-    console.log(miembro)
+    subimtFormMiembro()
+    resetForm()
   }
 }
 </script>
