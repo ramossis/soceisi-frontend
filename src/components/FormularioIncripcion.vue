@@ -3,7 +3,7 @@
     <v-card class="mx-auto mt-5 elevation-10" max-width="800" rounded="lg" border="primary thin">
       <v-toolbar color="primary" dark height="auto" class="py-3 px-2">
         <v-avatar size="45" class="ml-2 mr-3 bg-white pa-1">
-          <v-img src="@/assets/Logo-SoCiE-ISII.png" alt="SOCIE-ISII"></v-img>
+          <v-img src="../assets/Logo-SoCiE-ISII.png" alt="SOCIE-ISII"></v-img>
         </v-avatar>
 
         <div class="d-flex flex-column justify-center">
@@ -17,11 +17,12 @@
       </v-toolbar>
 
       <v-card-text class="pa-6">
-        <v-form ref="formRef" v-model="isFormValid">
+        <v-form ref="formRef" v-model="isFormValid" @submit.prevent="submitForm">
           <v-row>
             <v-col cols="12" md="6">
               <v-text-field
                 label="Nombres"
+                v-model="miembro.nombres"
                 prepend-inner-icon="mdi-account"
                 variant="outlined"
                 density="comfortable"
@@ -31,6 +32,7 @@
             <v-col cols="12" md="6">
               <v-text-field
                 label="Apellidos"
+                v-model="miembro.apellidos"
                 prepend-inner-icon="mdi-account-outline"
                 variant="outlined"
                 density="comfortable"
@@ -41,6 +43,7 @@
             <v-col cols="12" md="4">
               <v-text-field
                 label="CI"
+                v-model="miembro.ci"
                 type="number"
                 prepend-inner-icon="mdi-card-account-details"
                 variant="outlined"
@@ -51,6 +54,7 @@
             <v-col cols="12" md="4">
               <v-text-field
                 label="Fecha de Nacimiento"
+                v-model="miembro.fecha_nacimiento"
                 type="date"
                 prepend-inner-icon="mdi-calendar"
                 variant="outlined"
@@ -61,6 +65,7 @@
             <v-col cols="12" md="4">
               <v-text-field
                 label="Ciudad"
+                v-model="miembro.ciudad"
                 prepend-inner-icon="mdi-map-marker"
                 variant="outlined"
                 density="comfortable"
@@ -71,6 +76,7 @@
             <v-col cols="12" md="8">
               <v-text-field
                 label="Dirección"
+                v-model="miembro.direccion"
                 prepend-inner-icon="mdi-home"
                 variant="outlined"
                 density="comfortable"
@@ -80,6 +86,7 @@
             <v-col cols="12" md="4">
               <v-text-field
                 label="Celular"
+                v-model="miembro.celular"
                 type="tel"
                 prepend-inner-icon="mdi-phone"
                 variant="outlined"
@@ -91,6 +98,7 @@
             <v-col cols="12" md="6">
               <v-text-field
                 label="Email"
+                v-model="miembro.email"
                 type="email"
                 prepend-inner-icon="mdi-email"
                 variant="outlined"
@@ -102,6 +110,7 @@
             <v-col cols="12" md="6">
               <v-select
                 label="Facultad"
+                v-model="miembro.facultad"
                 :items="['Facultad Nacional de Ingeniería']"
                 prepend-inner-icon="mdi-domain"
                 variant="outlined"
@@ -112,6 +121,7 @@
             <v-col cols="12" md="6">
               <v-select
                 label="Carrera"
+                v-model="miembro.carrera"
                 :items="['Ingeniería de Sistemas', 'Ingeniería Informática']"
                 prepend-inner-icon="mdi-school"
                 variant="outlined"
@@ -123,6 +133,7 @@
             <v-col cols="12" md="6">
               <v-text-field
                 label="Matrícula Universitaria"
+                v-model="miembro.matriuula_univ"
                 type="number"
                 prepend-inner-icon="mdi-identifier"
                 variant="outlined"
@@ -133,6 +144,7 @@
             <v-col cols="12" md="4">
               <v-select
                 label="Semestre"
+                v-model="miembro.semestre"
                 :items="['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']"
                 variant="outlined"
                 density="comfortable"
@@ -142,6 +154,7 @@
             <v-col cols="12" md="8">
               <v-textarea
                 label="Motivo de Inscripción"
+                v-model="miembro.descripcion"
                 prepend-inner-icon="mdi-comment-text"
                 variant="outlined"
                 density="comfortable"
@@ -215,11 +228,28 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 
 const isFormValid = ref(false)
 const formRef = ref(null)
-
+const miembro = reactive({
+  ci: null,
+  nombres: null,
+  apellidos: null,
+  fecha_nacimiento: null,
+  ciudad: null,
+  direccion: null,
+  email: null,
+  facultad: null,
+  carrera: null,
+  nombre_soce: null,
+  semestre: null,
+  matriuula_univ: null,
+  descripcion: null,
+  foto_ci: null,
+  matricula: null,
+  registro_materia: null,
+})
 const resetForm = () => {
   formRef.value.reset()
 }
@@ -227,6 +257,7 @@ const resetForm = () => {
 const submitForm = () => {
   if (isFormValid.value) {
     alert('Formulario validado. ¡Listo para enviar a Vercel!')
+    console.log(miembro)
   }
 }
 </script>
