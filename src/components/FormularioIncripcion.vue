@@ -1,10 +1,19 @@
 <template>
   <v-container>
     <v-card class="mx-auto mt-5 elevation-10" max-width="800" rounded="lg" border="primary thin">
-      <v-toolbar color="primary" dark px-4>
-        <v-toolbar-title class="font-weight-bold">
-          Registro de Pre Inscripción SOCIE-ISII 2026
-        </v-toolbar-title>
+      <v-toolbar color="primary" dark height="auto" class="py-3 px-2">
+        <v-avatar size="45" class="ml-2 mr-3 bg-white pa-1">
+          <v-img src="@/assets/Logo-SoCiE-ISII.png" alt="SOCIE-ISII"></v-img>
+        </v-avatar>
+
+        <div class="d-flex flex-column justify-center">
+          <div class="text-h6 font-weight-bold titulo-adaptable line-height-tight">
+            Registro de Pre Inscripción
+          </div>
+          <div class="text-caption text-uppercase font-weight-medium opacity-80">
+            SOCIE-ISII 2026
+          </div>
+        </div>
       </v-toolbar>
 
       <v-card-text class="pa-6">
@@ -139,6 +148,7 @@
                 rows="2"
               ></v-textarea>
             </v-col>
+
             <v-col cols="12">
               <v-divider class="my-4"></v-divider>
               <p class="text-subtitle-1 font-weight-bold text-primary mb-4">
@@ -149,7 +159,7 @@
 
             <v-col cols="12" md="4">
               <v-file-input
-                label="Foto de C.I. (Anverso)"
+                label="Foto de C.I."
                 prepend-inner-icon="mdi-camera"
                 variant="outlined"
                 accept="image/*"
@@ -176,7 +186,7 @@
                 variant="outlined"
                 accept="image/*"
                 density="comfortable"
-                :rules="[(v) => !!v || 'Sube tu registro de materias']"
+                :rules="[(v) => !!v || 'Sube tu registro']"
               ></v-file-input>
             </v-col>
           </v-row>
@@ -186,13 +196,16 @@
       <v-divider></v-divider>
 
       <v-card-actions class="pa-4 justify-end">
-        <v-btn color="grey-darken-1" variant="text" class="mr-2">Limpiar</v-btn>
+        <v-btn color="grey-darken-1" variant="text" @click="resetForm" class="mr-2">
+          Limpiar
+        </v-btn>
         <v-btn
           color="primary"
           variant="elevated"
           size="large"
           min-width="150"
           :disabled="!isFormValid"
+          @click="submitForm"
         >
           Registrar
         </v-btn>
@@ -203,6 +216,35 @@
 
 <script setup>
 import { ref } from 'vue'
+
 const isFormValid = ref(false)
 const formRef = ref(null)
+
+const resetForm = () => {
+  formRef.value.reset()
+}
+
+const submitForm = () => {
+  if (isFormValid.value) {
+    alert('Formulario validado. ¡Listo para enviar a Vercel!')
+  }
+}
 </script>
+
+<style scoped>
+.line-height-tight {
+  line-height: 1.2 !important;
+}
+
+.titulo-adaptable {
+  white-space: normal !important;
+  word-wrap: break-word;
+  max-width: 100%;
+}
+
+@media (max-width: 600px) {
+  .titulo-adaptable {
+    font-size: 1.1rem !important;
+  }
+}
+</style>
