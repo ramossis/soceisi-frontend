@@ -1,11 +1,12 @@
 <template>
   <v-container>
-    <v-card class="mx-auto mt-5 elevation-10" max-width="600" rounded="lg" border="primary thin">
-      <v-toolbar color="primary" dark>
+    <v-card class="mx-auto mt-5 elevation-10" max-width="800" rounded="lg" border="primary thin">
+      <v-toolbar color="primary" dark px-4>
         <v-toolbar-title class="font-weight-bold">
-          Registro de Pre Inscripcion SOCEIISI 2026
+          Registro de Pre Inscripción SOCIE-ISII 2026
         </v-toolbar-title>
       </v-toolbar>
+
       <v-card-text class="pa-6">
         <v-form ref="formRef" v-model="isFormValid">
           <v-row>
@@ -14,26 +15,194 @@
                 label="Nombres"
                 prepend-inner-icon="mdi-account"
                 variant="outlined"
-                :rules="[(v) => !!v || 'El Nombre es obligatorio']"
-              >
-              </v-text-field>
+                density="comfortable"
+                :rules="[(v) => !!v || 'El nombre es obligatorio']"
+              ></v-text-field>
             </v-col>
             <v-col cols="12" md="6">
               <v-text-field
                 label="Apellidos"
-                prepend-inner-icon="mdi-account"
+                prepend-inner-icon="mdi-account-outline"
                 variant="outlined"
-                :rules="[(v) => !!v || 'El Apellido es obligatorio']"
-              >
-              </v-text-field>
+                density="comfortable"
+                :rules="[(v) => !!v || 'El apellido es obligatorio']"
+              ></v-text-field>
+            </v-col>
+
+            <v-col cols="12" md="4">
+              <v-text-field
+                label="CI"
+                type="number"
+                prepend-inner-icon="mdi-card-account-details"
+                variant="outlined"
+                density="comfortable"
+                :rules="[(v) => !!v || 'El CI es obligatorio']"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="4">
+              <v-text-field
+                label="Fecha de Nacimiento"
+                type="date"
+                prepend-inner-icon="mdi-calendar"
+                variant="outlined"
+                density="comfortable"
+                :rules="[(v) => !!v || 'Fecha requerida']"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="4">
+              <v-text-field
+                label="Ciudad"
+                prepend-inner-icon="mdi-map-marker"
+                variant="outlined"
+                density="comfortable"
+                :rules="[(v) => !!v || 'Ciudad obligatoria']"
+              ></v-text-field>
+            </v-col>
+
+            <v-col cols="12" md="8">
+              <v-text-field
+                label="Dirección"
+                prepend-inner-icon="mdi-home"
+                variant="outlined"
+                density="comfortable"
+                :rules="[(v) => !!v || 'Dirección requerida']"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="4">
+              <v-text-field
+                label="Celular"
+                type="tel"
+                prepend-inner-icon="mdi-phone"
+                variant="outlined"
+                density="comfortable"
+                :rules="[(v) => !!v || 'Celular requerido']"
+              ></v-text-field>
+            </v-col>
+
+            <v-col cols="12" md="6">
+              <v-text-field
+                label="Email"
+                type="email"
+                prepend-inner-icon="mdi-email"
+                variant="outlined"
+                density="comfortable"
+                :rules="[(v) => /.+@.+\..+/.test(v) || 'Email no válido']"
+              ></v-text-field>
+            </v-col>
+
+            <v-col cols="12" md="6">
+              <v-select
+                label="Facultad"
+                :items="['Facultad Nacional de Ingeniería']"
+                prepend-inner-icon="mdi-domain"
+                variant="outlined"
+                density="comfortable"
+              ></v-select>
+            </v-col>
+
+            <v-col cols="12" md="6">
+              <v-select
+                label="Carrera"
+                :items="['Ingeniería de Sistemas', 'Ingeniería Informática']"
+                prepend-inner-icon="mdi-school"
+                variant="outlined"
+                density="comfortable"
+                :rules="[(v) => !!v || 'Selecciona tu carrera']"
+              ></v-select>
+            </v-col>
+
+            <v-col cols="12" md="6">
+              <v-text-field
+                label="Matrícula Universitaria"
+                type="number"
+                prepend-inner-icon="mdi-identifier"
+                variant="outlined"
+                density="comfortable"
+              ></v-text-field>
+            </v-col>
+
+            <v-col cols="12" md="4">
+              <v-select
+                label="Semestre"
+                :items="['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']"
+                variant="outlined"
+                density="comfortable"
+              ></v-select>
+            </v-col>
+
+            <v-col cols="12" md="8">
+              <v-textarea
+                label="Motivo de Inscripción"
+                prepend-inner-icon="mdi-comment-text"
+                variant="outlined"
+                density="comfortable"
+                rows="2"
+              ></v-textarea>
+            </v-col>
+            <v-col cols="12">
+              <v-divider class="my-4"></v-divider>
+              <p class="text-subtitle-1 font-weight-bold text-primary mb-4">
+                <v-icon icon="mdi-attachment" class="mr-2"></v-icon>
+                Documentación Requerida (Imágenes)
+              </p>
+            </v-col>
+
+            <v-col cols="12" md="4">
+              <v-file-input
+                label="Foto de C.I. (Anverso)"
+                prepend-inner-icon="mdi-camera"
+                variant="outlined"
+                accept="image/*"
+                density="comfortable"
+                :rules="[(v) => !!v || 'La foto del CI es obligatoria']"
+              ></v-file-input>
+            </v-col>
+
+            <v-col cols="12" md="4">
+              <v-file-input
+                label="Matrícula Vigente"
+                prepend-inner-icon="mdi-card-account-details-star"
+                variant="outlined"
+                accept="image/*"
+                density="comfortable"
+                :rules="[(v) => !!v || 'Sube tu matrícula']"
+              ></v-file-input>
+            </v-col>
+
+            <v-col cols="12" md="4">
+              <v-file-input
+                label="Registro de Materias"
+                prepend-inner-icon="mdi-file-document-check"
+                variant="outlined"
+                accept="image/*"
+                density="comfortable"
+                :rules="[(v) => !!v || 'Sube tu registro de materias']"
+              ></v-file-input>
             </v-col>
           </v-row>
         </v-form>
       </v-card-text>
+
+      <v-divider></v-divider>
+
+      <v-card-actions class="pa-4 justify-end">
+        <v-btn color="grey-darken-1" variant="text" class="mr-2">Limpiar</v-btn>
+        <v-btn
+          color="primary"
+          variant="elevated"
+          size="large"
+          min-width="150"
+          :disabled="!isFormValid"
+        >
+          Registrar
+        </v-btn>
+      </v-card-actions>
     </v-card>
   </v-container>
 </template>
 
-<script setup></script>
-
-<style lang="scss" scoped></style>
+<script setup>
+import { ref } from 'vue'
+const isFormValid = ref(false)
+const formRef = ref(null)
+</script>
