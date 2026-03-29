@@ -234,7 +234,6 @@
 import { ref } from 'vue'
 import { useEstudianteStore } from '../stores/estudiante.store'
 import { storeToRefs } from 'pinia'
-
 const estudianteStore = useEstudianteStore()
 
 const { subimtFormMiembro } = estudianteStore
