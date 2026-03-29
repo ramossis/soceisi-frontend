@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const soceisiApi = axios.create({
-  baseURL: 'https://soceisi-incsripcion-backend.vercel.app/',
+  baseURL: 'https://soceisi-incsripcion-backend.vercel.app/api',
   timeOut: 1000,
   Headers: {
     Accept: 'application/json',

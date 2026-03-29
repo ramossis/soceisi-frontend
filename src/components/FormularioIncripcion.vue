@@ -3,7 +3,7 @@
     <v-card class="mx-auto mt-5 elevation-10" max-width="800" rounded="lg" border="primary thin">
       <v-toolbar color="primary" dark height="auto" class="py-3 px-2">
         <v-avatar size="45" class="ml-2 mr-3 bg-white pa-1">
-          <v-img src="../assets/Logo-SoCiE-ISII.png" alt="SOCIE-ISII"></v-img>
+          <v-img src="../assets/logo1.png" alt="SOCIE-ISII"></v-img>
         </v-avatar>
 
         <div class="d-flex flex-column justify-center">
@@ -133,8 +133,8 @@
             <v-col cols="12" md="6">
               <v-text-field
                 label="Matrícula Universitaria"
-                v-model="miembro.matriuula_univ"
-                type="number"
+                v-model="miembro.matricula_univ"
+                type="text"
                 prepend-inner-icon="mdi-identifier"
                 variant="outlined"
                 density="comfortable"
@@ -237,16 +237,27 @@ import { storeToRefs } from 'pinia'
 const estudianteStore = useEstudianteStore()
 
 const { subimtFormMiembro } = estudianteStore
-const { miembro } = storeToRefs(estudianteStore)
+const { miembro, isLoading } = storeToRefs(estudianteStore)
 const isFormValid = ref(false)
 const formRef = ref(null)
 const resetForm = () => {
-  formRef.value.reset()
+  if (formRef.value) {
+    formRef.value.reser()
+    Object.assign(miembro.value, {
+      foto_ci: null,
+      matricula: null,
+      registro_materia: null,
+    })
+  }
 }
 
-const submitForm = () => {
-  if (isFormValid.value) {
-    subimtFormMiembro()
+const submitForm = async () => {
+  const { valid } = await formRef.value.validate()
+
+  if (valid) {
+    const result = await subimtFormMiembro()
+  }
+  if (result && result.ok) {
     resetForm()
   }
 }

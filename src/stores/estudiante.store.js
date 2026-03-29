@@ -1,5 +1,6 @@
 import { reactive, ref } from 'vue'
 import { defineStore } from 'pinia'
+import { toast } from 'vue3-toastify'
 import soceisiApi from '../config/api/sociApi'
 
 //orm ''
@@ -16,37 +17,51 @@ export const useEstudianteStore = defineStore('estudiante', () => {
     carrera: '',
     nombre_soce: '',
     semestre: '',
-    matriuula_univ: '',
+    matricula_univ: '',
     descripcion: '',
-    foto_ci: '',
-    matricula: '',
-    registro_materia: '',
+    foto_ci: null,
+    matricula: null,
+    registro_materia: null,
   })
   const isLoading = ref(false)
   const subimtFormMiembro = async () => {
     isLoading.value = true
     try {
-      const fromData = new FormData()
+      const formData = new FormData()
+      console.log('Estado actual del miembro', { ...miembro })
+
       Object.keys(miembro).forEach((key) => {
-        if (!['foto_ci', 'matrciula', 'registro_materia'].includes(key)) {
-          fromData.append(key, miembro[key] || '')
+        if (!['foto_ci', 'matricula', 'registro_materia'].includes(key)) {
+          let valor = miembro[key]
+
+          if (key === 'fecha_nacimiento' && valor) {
+            valor = new Date(valor).toISOString()
+          }
+          formData.append(key, valor || '')
         }
       })
-      if (miembro.foto_ci?.[0]) {
-        formData.append('foto_ci', miembro.foto_ci[0])
-      }
-      if (miembro.matricula?.[0]) {
-        formData.append('matricula', miembro.matricula[0])
-      }
-      if (miembro.registro_materia?.[0]) {
-        formData.append('registro_materia', miembro.registro_materia[0])
+      const procesarArchivo = (campo) => {
+        if (!campo) return null
+        // Si es un array (común en Vuetify), tomamos el primero. Si no, el objeto mismo.
+        return Array.isArray(campo) ? campo[0] : campo
       }
 
-      const { data } = await soceisiApi.post('/registro', formData)
-      alert(`${data}`)
+      const fileCi = procesarArchivo(miembro.foto_ci)
+      const fileMat = procesarArchivo(miembro.matricula)
+      const fileReg = procesarArchivo(miembro.registro_materia)
+
+      if (fileCi) formData.append('foto_ci', fileCi)
+      if (fileMat) formData.append('matricula', fileMat)
+      if (fileReg) formData.append('registro_materia', fileReg)
+
+      console.log('Enviando estos campos:', Array.from(formData.keys()))
+      const { data } = await soceisiApi.post('/estudiante', formData)
+      toast.success('Registro enviado a la SOCEIISI correctamente')
       return { ok: true, data }
     } catch (error) {
       console.log(error)
+      const errorMsg = error.response?.data?.error || 'Error al conectar con el servidor'
+      toast.error(errorMsg)
       return { ok: false, error }
     } finally {
       isLoading.value = false
