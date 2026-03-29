@@ -1,4 +1,4 @@
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { defineStore } from 'pinia'
 import soceisiApi from '../config/api/sociApi'
 
