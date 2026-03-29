@@ -3,7 +3,7 @@
     <v-card class="mx-auto mt-5 elevation-10" max-width="800" rounded="lg" border="primary thin">
       <v-toolbar color="primary" dark height="auto" class="py-3 px-2">
         <v-avatar size="45" class="ml-2 mr-3 bg-white pa-1">
-          <v-img src="../assets/logo1.png" alt="SOCIE-ISII"></v-img>
+          <v-img :src="LogoSoce" alt="SOCIE-ISII"></v-img>
         </v-avatar>
 
         <div class="d-flex flex-column justify-center">
@@ -221,6 +221,7 @@
           size="large"
           min-width="150"
           :disabled="!isFormValid"
+          :loading="isLoading"
           @click="submitForm"
         >
           Registrar
@@ -234,6 +235,7 @@
 import { ref } from 'vue'
 import { useEstudianteStore } from '../stores/estudiante.store'
 import { storeToRefs } from 'pinia'
+import LogoSoce from '../assets/Logo-SoCiE-ISII.png'
 const estudianteStore = useEstudianteStore()
 
 const { subimtFormMiembro } = estudianteStore
