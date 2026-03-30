@@ -150,8 +150,17 @@
                 density="comfortable"
               ></v-select>
             </v-col>
+            <v-col cols="12" md="4">
+              <v-select
+                label="Nombre Sociedad"
+                v-model="miembro.nombre_soce"
+                :items="['SOCIEISII']"
+                variant="outlined"
+                density="comfortable"
+              ></v-select>
+            </v-col>
 
-            <v-col cols="12" md="8">
+            <v-col cols="12" md="12">
               <v-textarea
                 label="Motivo de Inscripción"
                 v-model="miembro.descripcion"
