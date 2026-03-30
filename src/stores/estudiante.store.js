@@ -15,7 +15,7 @@ export const useEstudianteStore = defineStore('estudiante', () => {
     email: '',
     facultad: '',
     carrera: '',
-    nombre_soce: '',
+    nombre_soce: 'SOCIEISII',
     semestre: '',
     matricula_univ: '',
     descripcion: '',
@@ -54,9 +54,9 @@ export const useEstudianteStore = defineStore('estudiante', () => {
       if (fileMat) formData.append('matricula', fileMat)
       if (fileReg) formData.append('registro_materia', fileReg)
 
-      console.log('Enviando estos campos:', Array.from(formData.keys()))
       const { data } = await soceisiApi.post('/estudiante', formData)
       toast.success('Registro enviado a la SOCEIISI correctamente')
+      resetForm()
       return { ok: true, data }
     } catch (error) {
       console.log(error)
@@ -67,5 +67,14 @@ export const useEstudianteStore = defineStore('estudiante', () => {
       isLoading.value = false
     }
   }
-  return { subimtFormMiembro, isLoading, miembro }
+  const resetForm = () => {
+    Object.keys(miembro).forEach((key) => {
+      if (typeof miembro[key] === 'string') {
+        miembro[key] = ' '
+      } else {
+        miembro[key] = null
+      }
+    })
+  }
+  return { subimtFormMiembro, isLoading, resetForm, miembro }
 })

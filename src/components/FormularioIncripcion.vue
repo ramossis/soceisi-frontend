@@ -212,7 +212,7 @@
       <v-divider></v-divider>
 
       <v-card-actions class="pa-4 justify-end">
-        <v-btn color="grey-darken-1" variant="text" @click="resetForm" class="mr-2">
+        <v-btn color="grey-darken-1" variant="text" @click="cleanForm()" class="mr-2">
           Limpiar
         </v-btn>
         <v-btn
@@ -242,16 +242,6 @@ const { subimtFormMiembro } = estudianteStore
 const { miembro, isLoading } = storeToRefs(estudianteStore)
 const isFormValid = ref(false)
 const formRef = ref(null)
-const resetForm = () => {
-  if (formRef.value) {
-    formRef.value.reser()
-    Object.assign(miembro.value, {
-      foto_ci: null,
-      matricula: null,
-      registro_materia: null,
-    })
-  }
-}
 
 const submitForm = async () => {
   const { valid } = await formRef.value.validate()
@@ -262,6 +252,9 @@ const submitForm = async () => {
   if (result && result.ok) {
     resetForm()
   }
+}
+const cleanForm = () => {
+  estudianteStore.resetForm()
 }
 </script>
 
