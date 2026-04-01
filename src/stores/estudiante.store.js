@@ -11,7 +11,7 @@ export const useEstudianteStore = defineStore('estudiante', () => {
     nombres: '',
     apellidos: '',
     fecha_nacimiento: '',
-    ciudad: '',
+    cuidad: '',
     direccion: '',
     email: '',
     facultad: '',

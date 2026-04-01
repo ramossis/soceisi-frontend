@@ -65,7 +65,7 @@
             <v-col cols="12" md="4">
               <v-text-field
                 label="Ciudad"
-                v-model="miembro.ciudad"
+                v-model="miembro.cuidad"
                 prepend-inner-icon="mdi-map-marker"
                 variant="outlined"
                 density="comfortable"
