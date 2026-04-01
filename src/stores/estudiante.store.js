@@ -2,6 +2,7 @@ import { reactive, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { toast } from 'vue3-toastify'
 import soceisiApi from '../config/api/sociApi'
+import { reportFactura } from '@/utils/reportfactura'
 
 //orm ''
 export const useEstudianteStore = defineStore('estudiante', () => {
@@ -55,7 +56,9 @@ export const useEstudianteStore = defineStore('estudiante', () => {
       if (fileReg) formData.append('registro_materia', fileReg)
 
       const { data } = await soceisiApi.post('/estudiante', formData)
+      console.log('Datas backned', data.estudiante)
       toast.success('Registro enviado a la SOCEIISI correctamente')
+      reportFactura(data.estudiante)
       resetForm()
       return { ok: true, data }
     } catch (error) {

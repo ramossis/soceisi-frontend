@@ -14,6 +14,8 @@
     "@unocss/preset-attributify": "^66.6.7",
     "@unocss/preset-uno": "^66.6.7",
     "axios": "^1.14.0",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.7",
     "pinia": "^3.0.4",
     "unocss": "^66.6.7",
     "vue": "^3.5.29",
