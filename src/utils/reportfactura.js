@@ -50,5 +50,15 @@ export const reportFactura = (datos) => {
     15,
     finalY,
   )
-  doc.save(`Comprobante_SOCIE_${datos.ci}.pdf`)
+  const pdfBlob = doc.output('blob')
+  const url = URL.createObjectURL(pdfBlob)
+
+  const newWindow = window.open(url, '_blank')
+  if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+    doc.save(`Comprobante_SOCIE_${datos.ci}.pdf`)
+  }
+
+  setTimeout(() => {
+    URL.revokeObjectURL(url)
+  }, 2000)
 }
