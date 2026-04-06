@@ -7,7 +7,9 @@
             <v-avatar size="80" class="mb-4" bg-white elevation-2>
               <v-img src="/public/Logo-SoCiE-ISII.png" alt="SOCIE-ISII"> </v-img>
             </v-avatar>
-            <v-card-title class="text-h5 font-weight-bold"> Panel Administrativo </v-card-title>
+            <v-card-title class="text-h5 font-weight-bold titulo-adaptable line-height-tight">
+              Panel Administrativo
+            </v-card-title>
             <v-card-subtitle> Inicia sesion para gestionar </v-card-subtitle>
           </v-card-item>
           <v-card-text class="mt-4">
@@ -83,4 +85,18 @@ const handleLogin = async () => {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.line-height-tight {
+  line-height: 1.2 !important;
+}
+.titulo-adaptable {
+  white-space: normal !important;
+  word-wrap: break-word;
+  max-width: 100%;
+}
+@media (max-width: 600px) {
+  .titulo-adaptable {
+    font-size: 1.1rem !important;
+  }
+}
+</style>

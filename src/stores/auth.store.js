@@ -1,23 +1,39 @@
 import { defineStore } from 'pinia'
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import soceisiApi from '@/config/api/sociApi'
 import { toast } from 'vue3-toastify'
+import { useRouter } from 'vue-router'
 
 export const useAuthStore = defineStore('auth', () => {
+  const router = useRouter()
+
   const isLoading = ref(false)
+  const user = ref(null)
+  const token = ref(localStorage.getItem('tokenUser') || null)
+
+  const isAuhenticated = computed(() => !!token.value)
+
   const credentials = reactive({
     usuario: '',
     password: '',
   })
   const login = async () => {
+    isLoading.value = true
     try {
       const { data } = await soceisiApi.post('/login', credentials)
-      console.log(data)
+      token.value = data.token
+      user.value = { nombre: data.usuario.nombre, rol: data.usuario.rol }
+      localStorage.setItem('tokenUser', token.value)
+      toast.success(`${data.mesage}`)
+      toast.success(`Nombre:${user.value.nombre} Rol:${user.value.rol}`)
+      isLoading.value = false
+      router.push('/admin')
+      return { ok: true }
     } catch (error) {
-      console.error(error.response?.data)
+      const errorMessage = error.response?.data?.error || 'Error de Conexion '
+      toast.error(`${errorMessage}`)
+      isLoading.value = false
     }
-    isLoading.value = true
-    isLoading.value = false
   }
-  return { credentials, isLoading, login }
+  return { credentials, isLoading, isAuhenticated, login, user }
 })
