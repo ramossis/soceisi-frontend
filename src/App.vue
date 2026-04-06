@@ -1,11 +1,9 @@
-<script setup>
-import FormularioIncripcion from '@/components/FormularioIncripcion.vue'
-</script>
+<script setup></script>
 
 <template>
   <v-app>
     <v-main>
-      <FormularioIncripcion />
+      <router-view />
     </v-main>
   </v-app>
 </template>
