@@ -6,6 +6,7 @@ import { reportFactura } from '@/utils/reportfactura'
 
 //orm ''
 export const useEstudianteStore = defineStore('estudiante', () => {
+  const listaEstudiantes = ref([])
   const miembro = reactive({
     ci: '',
     nombres: '',
@@ -79,5 +80,16 @@ export const useEstudianteStore = defineStore('estudiante', () => {
       }
     })
   }
-  return { subimtFormMiembro, isLoading, resetForm, miembro }
+  const getEstudiantes = async () => {
+    isLoading.value = true
+    try {
+      const { data } = await soceisiApi.get('/estudiante')
+      listaEstudiantes.value = data
+      isLoading.value = false
+    } catch (error) {
+      console.log(error)
+      isLoading.value = false
+    }
+  }
+  return { subimtFormMiembro, getEstudiantes, listaEstudiantes, isLoading, resetForm, miembro }
 })

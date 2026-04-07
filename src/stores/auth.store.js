@@ -35,5 +35,11 @@ export const useAuthStore = defineStore('auth', () => {
       isLoading.value = false
     }
   }
-  return { credentials, isLoading, isAuhenticated, login, user }
+  const logout = () => {
+    token.value = null
+    user.value = null
+    localStorage.removeItem('tokenUser')
+    router.push('/login')
+  }
+  return { credentials, isLoading, isAuhenticated, login, logout, token, user }
 })
