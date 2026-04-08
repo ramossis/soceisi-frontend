@@ -5,11 +5,20 @@
         <v-card color="indigo-darken-4" class="rounded-xl pa-5 elevation-1">
           <v-list-item class="text-white">
             <v-list-item-title class="text-h4 font-weight-black mb-1">
-              Bienvenido, Presidente
+              Bienvenido, {{ user.rol }} {{ user.nombre }}
             </v-list-item-title>
-            <v-list-item-subtitle class="text-subtitle-1 text-indigo-lighten-4">
+            <v-list-item-subtitle class="text-subtitle-1 text-indigo-lighten-4 mb-2">
               Resumen en tiempo real de las pre-inscripciones SOCIE-ISII 2026
             </v-list-item-subtitle>
+            <v-btn
+              prepend-icon="mdi-logout-outline"
+              variant="text"
+              color="white"
+              class="text-indigo-lighen-3"
+              @click="handleLogout"
+            >
+              Cerrar Sesión
+            </v-btn>
             <template v-slot:append>
               <v-icon
                 size="60"
@@ -81,7 +90,6 @@
             :headers="headers"
             :items="listaEstudiantes"
             :search="search"
-            :loading="isLoading"
             class="elevation-0 pa-2"
             hover
           >
@@ -130,6 +138,14 @@
                   color="success"
                   @click="inscribirMembresia(item)"
                   title="Aprobar Inscripción"
+                ></v-btn>
+                <v-btn
+                  icon="mdi-printer-outline"
+                  size="small"
+                  variant="text"
+                  color="success"
+                  @click="handleFichaInscripcion(item)"
+                  title="Imprimir Ficha de Inscripcion"
                 ></v-btn>
               </div>
             </template>
@@ -274,9 +290,9 @@
             Estudiante: <span class="font-weight-bold text-black">{{ estudiante?.nombres }}</span>
           </p>
 
-          <v-form ref="formPago" @submit.prevent="confirmar">
+          <v-form ref="formPago" v-model="isValidForm" @submit.prevent="confirmar">
             <v-text-field
-              v-model.number="monto"
+              v-model="inscripcion.monto"
               label="Monto de Inscripción (BS)"
               variant="outlined"
               prefix="Bs."
@@ -297,8 +313,8 @@
             variant="elevated"
             min-width="120"
             rounded="lg"
-            :disabled="!monto || monto <= 0"
-            @click="confirmar"
+            :disabled="!inscripcion.monto || inscripcion.monto <= 0"
+            @click="hanldeInscripcion(selectStudent.id)"
           >
             INSCRIBIR
           </v-btn>
@@ -309,19 +325,23 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useEstudianteStore } from '@/stores/estudiante.store'
 import { storeToRefs } from 'pinia'
+import { useAuthStore } from '@/stores/auth.store'
 
 const estudianteStore = useEstudianteStore()
-const { listaEstudiantes, isLoading } = storeToRefs(estudianteStore)
+const { listaEstudiantes, isLoading, inscripcion, estudianteMsg } = storeToRefs(estudianteStore)
+
+const authStore = useAuthStore()
+const { user } = storeToRefs(authStore)
 
 const search = ref('')
 const dialogDatos = ref(false)
 const dialogDocumentos = ref(false)
 const dialogMembresia = ref(false)
 const selectStudent = ref(null)
-
+const isValidForm = ref(false)
 const headers = [
   { title: 'C.I.', key: 'ci' },
   { title: 'Nombres', key: 'nombres', sortable: true },
@@ -353,8 +373,27 @@ const getEstadoColor = (estado) => {
       return 'grey'
   }
 }
+const handleLogout = () => {
+  const auth = useAuthStore()
+  auth.logout()
+}
+const hanldeInscripcion = async (id) => {
+  await estudianteStore.inscribitMiembro(id)
+}
+const handleFichaInscripcion = async (selectStudent) => {
+  await estudianteStore.generarFicha(selectStudent)
+}
+let intervalId = null
 onMounted(async () => {
+  console.table({ user })
   await estudianteStore.getEstudiantes()
+
+  intervalId = setInterval(async () => {
+    await estudianteStore.getEstudiantes()
+  }, 3000)
+})
+onUnmounted(() => {
+  if (intervalId) clearInterval(intervalId)
 })
 </script>
 

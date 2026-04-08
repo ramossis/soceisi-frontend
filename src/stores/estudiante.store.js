@@ -3,9 +3,11 @@ import { defineStore } from 'pinia'
 import { toast } from 'vue3-toastify'
 import soceisiApi from '../config/api/sociApi'
 import { reportFactura } from '@/utils/reportfactura'
+import { generarFichaOficial } from '@/utils/fichaIncripcion'
 
 //orm ''
 export const useEstudianteStore = defineStore('estudiante', () => {
+  const estudianteMsg = ref(null)
   const listaEstudiantes = ref([])
   const miembro = reactive({
     ci: '',
@@ -24,6 +26,9 @@ export const useEstudianteStore = defineStore('estudiante', () => {
     foto_ci: null,
     matricula: null,
     registro_materia: null,
+  })
+  const inscripcion = reactive({
+    monto: null,
   })
   const isLoading = ref(false)
   const subimtFormMiembro = async () => {
@@ -87,9 +92,39 @@ export const useEstudianteStore = defineStore('estudiante', () => {
       listaEstudiantes.value = data
       isLoading.value = false
     } catch (error) {
-      console.log(error)
+      toast.error('Por Favor Cierra Sesion y vuelve a entrar')
       isLoading.value = false
     }
   }
-  return { subimtFormMiembro, getEstudiantes, listaEstudiantes, isLoading, resetForm, miembro }
+  const inscribitMiembro = async (id) => {
+    try {
+      const { data } = await soceisiApi.post('/estudiante/confirmar-pago', {
+        id_estudiante: id,
+        monto: inscripcion.monto,
+      })
+      estudianteMsg.value = data.message
+      toast.success(estudianteMsg.value)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const generarFicha = async (data) => {
+    try {
+      await generarFichaOficial(data)
+    } catch (error) {
+      toast.error(error)
+    }
+  }
+  return {
+    subimtFormMiembro,
+    getEstudiantes,
+    listaEstudiantes,
+    inscribitMiembro,
+    generarFicha,
+    resetForm,
+    isLoading,
+    miembro,
+    inscripcion,
+    estudianteMsg,
+  }
 })
