@@ -145,7 +145,7 @@
               <v-select
                 label="Semestre"
                 v-model="miembro.semestre"
-                :items="['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']"
+                :items="['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Egresado']"
                 variant="outlined"
                 density="comfortable"
               ></v-select>
@@ -181,7 +181,7 @@
 
             <v-col cols="12" md="4">
               <v-file-input
-                label="Foto de C.I."
+                label="Foto de C.I.(Fotocopia)"
                 prepend-inner-icon="mdi-camera"
                 v-model="miembro.foto_ci"
                 variant="outlined"
