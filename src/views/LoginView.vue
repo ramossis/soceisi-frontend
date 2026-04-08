@@ -5,7 +5,7 @@
         <v-card elevation="12" rounded="xl" class="pa-4">
           <v-card-item class="text-center">
             <v-avatar size="80" class="mb-4" bg-white elevation-2>
-              <v-img src="/public/Logo-SoCiE-ISII.png" alt="SOCIE-ISII"> </v-img>
+              <v-img src="/Logo-SoCiE-ISII.png" alt="SOCIE-ISII"> </v-img>
             </v-avatar>
             <v-card-title class="text-h5 font-weight-bold titulo-adaptable line-height-tight">
               Panel Administrativo

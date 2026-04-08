@@ -5,16 +5,16 @@
         <v-card color="indigo-darken-4" class="rounded-xl pa-5 elevation-1">
           <v-list-item class="text-white">
             <v-list-item-title class="text-h4 font-weight-black mb-1">
-              Bienvenido, {{ user.rol }} {{ user.nombre }}
+              Bienvenido, {{ user?.rol || ' Rol ' }} {{ user?.nombre || ' Usuario ' }}
             </v-list-item-title>
             <v-list-item-subtitle class="text-subtitle-1 text-indigo-lighten-4 mb-2">
               Resumen en tiempo real de las pre-inscripciones SOCIE-ISII 2026
             </v-list-item-subtitle>
             <v-btn
-              prepend-icon="mdi-logout-outline"
-              variant="text"
-              color="white"
-              class="text-indigo-lighen-3"
+              prepend-icon="mdi-logout-variant"
+              variant="flat"
+              color="indigo-lighten-4"
+              class="rounded-lg"
               @click="handleLogout"
             >
               Cerrar Sesión
