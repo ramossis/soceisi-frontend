@@ -146,6 +146,7 @@
                   color="success"
                   @click="handleFichaInscripcion(item)"
                   title="Imprimir Ficha de Inscripcion"
+                  :disabled="item.estado_inscripcion === 'Pendiente'"
                 ></v-btn>
               </div>
             </template>
@@ -291,6 +292,13 @@
           </p>
 
           <v-form ref="formPago" v-model="isValidForm" @submit.prevent="confirmar">
+            <v-select
+              label="Tipo Estudiante"
+              v-model="inscripcion.tipo_miembro"
+              :items="['Nuevo', 'Antiguo']"
+              variant="outlined"
+              density="comfortable"
+            ></v-select>
             <v-text-field
               v-model="inscripcion.monto"
               label="Monto de Inscripción (BS)"
@@ -302,6 +310,7 @@
               bg-color="green-lighten-5"
               autofocus
               :rules="[(v) => !!v || 'El monto es obligatorio']"
+              :disabled="inscripcion.tipo_miembro === 'Antiguo'"
             ></v-text-field>
           </v-form>
         </v-card-text>
@@ -313,7 +322,9 @@
             variant="elevated"
             min-width="120"
             rounded="lg"
-            :disabled="!inscripcion.monto || inscripcion.monto <= 0"
+            :disabled="
+              inscripcion.tipo_miembro === 'Nuevo' && (!inscripcion.monto || inscripcion.monto <= 0)
+            "
             @click="hanldeInscripcion(selectStudent.id)"
           >
             INSCRIBIR

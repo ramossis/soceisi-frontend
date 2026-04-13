@@ -1,4 +1,4 @@
-import { reactive, ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { toast } from 'vue3-toastify'
 import soceisiApi from '../config/api/sociApi'
@@ -28,8 +28,19 @@ export const useEstudianteStore = defineStore('estudiante', () => {
     registro_materia: null,
   })
   const inscripcion = reactive({
-    monto: null,
+    monto: '',
+    tipo_miembro: '',
   })
+  watch(
+    () => inscripcion.tipo_miembro,
+    (nuevoValor) => {
+      if (nuevoValor === 'Antiguo') {
+        inscripcion.monto = '0.00'
+      } else {
+        inscripcion.monto = ''
+      }
+    },
+  )
   const isLoading = ref(false)
   const subimtFormMiembro = async () => {
     isLoading.value = true
@@ -101,6 +112,7 @@ export const useEstudianteStore = defineStore('estudiante', () => {
       const { data } = await soceisiApi.post('/estudiante/confirmar-pago', {
         id_estudiante: id,
         monto: inscripcion.monto,
+        tipo_miembro: inscripcion.tipo_miembro,
       })
       estudianteMsg.value = data.message
       toast.success(estudianteMsg.value)

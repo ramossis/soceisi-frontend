@@ -9,13 +9,13 @@ const soceisiApi = axios.create({
   },
 })
 
-soceisiApi.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    console.log(`Error en la peticion:`, error.response?.data || error.message)
-    return Promise.reject(error)
-  },
-)
+// soceisiApi.interceptors.response.use(
+//   (response) => response,
+//   (error) => {
+//     console.log(`Error en la peticion:`, error.response?.data || error.message)
+//     return Promise.reject(error)
+//   },
+// )
 
 soceisiApi.interceptors.request.use(
   (config) => {
