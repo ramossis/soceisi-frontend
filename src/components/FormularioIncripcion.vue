@@ -170,16 +170,6 @@
                 rows="2"
               ></v-textarea>
             </v-col>
-            <v-col cols="12" md="12">
-              <v-textarea
-                label="Introduzca Informacion"
-                v-model="miembro.descripcion"
-                prepend-inner-icon="mdi-comment-text"
-                variant="outlined"
-                density="comfortable"
-                rows="2"
-              ></v-textarea>
-            </v-col>
 
             <v-col cols="12">
               <v-divider class="my-4"></v-divider>
