@@ -127,6 +127,14 @@ export const useEstudianteStore = defineStore('estudiante', () => {
       toast.error(error)
     }
   }
+  const deleteMember = async (id) => {
+    try {
+      const { data } = await soceisiApi.delete(`/estudiante/${id}`)
+      toast.success(data.message)
+    } catch (error) {
+      toast.error(error)
+    }
+  }
   return {
     subimtFormMiembro,
     getEstudiantes,
@@ -138,5 +146,6 @@ export const useEstudianteStore = defineStore('estudiante', () => {
     miembro,
     inscripcion,
     estudianteMsg,
+    deleteMember,
   }
 })

@@ -217,9 +217,7 @@
           </v-row>
         </v-form>
       </v-card-text>
-
       <v-divider></v-divider>
-
       <v-card-actions class="pa-4 justify-end">
         <v-btn color="grey-darken-1" variant="text" @click="cleanForm()" class="mr-2">
           Limpiar
