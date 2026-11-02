@@ -2,6 +2,7 @@ import { useAuthStore } from '@/stores/auth.store'
 import axios from 'axios'
 
 const soceisiApi = axios.create({
+  // baseURL: 'http://localhost:3600/api',
   baseURL: 'https://soceisi-incsripcion-backend.vercel.app/api',
   timeOut: 1000,
   Headers: {

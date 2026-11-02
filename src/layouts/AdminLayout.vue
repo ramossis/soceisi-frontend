@@ -132,6 +132,15 @@
                   title="Revisar Documentos"
                 ></v-btn>
                 <v-btn
+                  icon="mdi-trash-can-outline"
+                  size="small"
+                  variant="text"
+                  color="red"
+                  @click="eliminarEstudiante(item)"
+                  title="Eliminar Postualnte"
+                >
+                </v-btn>
+                <v-btn
                   icon="mdi-check-decagram-outline"
                   size="small"
                   variant="text"
@@ -371,6 +380,9 @@ const verDocumentos = (estudiante) => {
 const inscribirMembresia = (estudiante) => {
   selectStudent.value = estudiante
   dialogMembresia.value = true
+}
+const eliminarEstudiante = async (estudiante) => {
+  await estudianteStore.deleteMember(estudiante.id)
 }
 const getEstadoColor = (estado) => {
   switch (estado?.toLowerCase()) {
