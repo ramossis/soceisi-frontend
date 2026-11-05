@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAuthStore } from '@/stores/auth.store'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +20,11 @@ const router = createRouter({
       name: 'Login',
     },
     {
+      path: '/asistencia/:eventoId',
+      name: 'Asistencia',
+      component: () => import('@/views/AsistenciaView.vue'),
+    },
+    {
       path: '/admin',
       component: () => import('@/layouts/AdminLayout.vue'),
       meta: { requireAuth: true },
@@ -29,6 +33,11 @@ const router = createRouter({
           path: '',
           name: 'Dashboard',
           component: () => import('@/views/AdminDashboard.vue'),
+        },
+        {
+          path: 'eventos',
+          name: 'Eventos',
+          component: () => import('@/views/EventosView.vue'),
         },
       ],
     },
